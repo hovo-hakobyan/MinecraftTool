@@ -26,7 +26,7 @@ int wmain(int argc, wchar_t* argv[], wchar_t* envp[])
     //Bunch of returns if the input is wrong
     if (argc != 3 && argc != 5)
     {
-        std::wcout << L"Invalid number of arguments" << std::endl;
+        std::wcout << L"Invalid number of argument" << std::endl;
         return -1;
     }
 
