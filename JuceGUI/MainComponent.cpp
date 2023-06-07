@@ -4,6 +4,8 @@
 //==============================================================================
 MainComponent::MainComponent()
 {
+    m_NrSelectedFiles = 0;
+
     // Make sure you set the size of the component after
     // you add any child components.
     setSize (800, 600);
@@ -28,7 +30,7 @@ MainComponent::MainComponent()
     addAndMakeVisible(m_OutputButton);
     m_OutputButton.onClick = [this]()
     {
-        SelectFile("*.obj", m_OutputPath);
+        SelectFile(String(), m_OutputPath);
     };
     m_OutputButton.setEnabled(false);
 
@@ -44,6 +46,7 @@ MainComponent::MainComponent()
     m_OkButton.setEnabled(false);
     m_OkButton.onClick = [this]()
     {
+        m_OutputPath.append(L"\\output.obj");
         Block::JsonToOBJ(m_InputPath, m_OutputPath);
     };
 }
@@ -84,7 +87,7 @@ void MainComponent::resized()
     m_InputButton.setBounds(x, compHeight - (height + 10), width, height);
     m_OutputButton.setBounds(x, compHeight - 2 * (height + 10), width, height);
     m_CancelButton.setBounds(x + width / 2, compHeight - 3 * (height + 10), width / 2, height);
-    m_OkButton.setBounds(x, compHeight - 3 * (height + 10), width / 2, height / 2);
+    m_OkButton.setBounds(x, compHeight - 3 * (height + 10), width / 2, height );
 }
 
 void MainComponent::SelectFile(const String& filePattern , std::wstring& pathToSave)
@@ -95,7 +98,9 @@ void MainComponent::SelectFile(const String& filePattern , std::wstring& pathToS
         File::getSpecialLocation(File::userHomeDirectory),
         filePattern);
     auto folderChooserFlags =
-        FileBrowserComponent::openMode;
+        FileBrowserComponent::openMode |
+        FileBrowserComponent::canSelectFiles |
+        FileBrowserComponent::canSelectDirectories;
     m_pInputChooser->launchAsync(folderChooserFlags,
         [&](const FileChooser& chooser)
         {
