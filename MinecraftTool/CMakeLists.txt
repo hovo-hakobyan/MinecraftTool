@@ -7,8 +7,8 @@ add_executable(MinecraftTool MinecraftTool.cpp)
 # PROJECT_BINARY_DIR: Cmake variable that represents the binary outut dir of the current project
 # JSONIncludeDir: user defined variable (check rapidjson/CMakeLists.txt)
 target_include_directories(MinecraftTool PUBLIC
-    "${JSONIncludeDir}"
+    "${PROJECT_BINARY_DIR}"
     "${CommonCodeIncludeDir}"
     )
 
-target_link_libraries(MinecraftTool PUBLIC rapidjson CommonCode)
+target_link_libraries(MinecraftTool PUBLIC CommonCode)
