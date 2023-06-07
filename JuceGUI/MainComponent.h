@@ -22,6 +22,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
     void SelectFile(const String& filePattern, std::wstring& pathToSave);
+    void ClearFiles();
 
 private:
     //==============================================================================
@@ -38,6 +39,8 @@ private:
     std::wstring m_OutputPath;
 
     std::unique_ptr<juce::FileChooser> m_pInputChooser;
+
+    uint8_t m_NrSelectedFiles;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

@@ -68,7 +68,7 @@ int wmain(int argc, wchar_t* argv[], wchar_t* envp[])
         return -1;
     }
 
-    BlockUtils::JsonToOBJ(inputName,outputName);
+    Block::JsonToOBJ(inputName,outputName);
 
     return 0;
 

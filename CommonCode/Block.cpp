@@ -12,15 +12,13 @@
 #include <locale>
 
 
-bool IsFaceHidden(const float3& blockPos, const float3& posToCompare)
+bool Block::IsFaceHidden(const float3& blockPos, const float3& posToCompare)
 {
     return blockPos == posToCompare;
 }
 
-namespace BlockUtils
-{
 
-void JsonToOBJ(const std::wstring& inputName, const std::wstring& outputName)
+void Block::JsonToOBJ(const std::wstring& inputName, const std::wstring& outputName)
 {
     using namespace rapidjson;
      if (std::ifstream is{ inputName.c_str() })
@@ -227,5 +225,4 @@ void JsonToOBJ(const std::wstring& inputName, const std::wstring& outputName)
 
 
     std::wcout << L"Finished successfully" << std::endl;
-}
 }

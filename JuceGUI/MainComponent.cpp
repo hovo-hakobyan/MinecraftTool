@@ -1,4 +1,5 @@
 #include "MainComponent.h"
+#include "Block.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -29,7 +30,22 @@ MainComponent::MainComponent()
     {
         SelectFile("*.obj", m_OutputPath);
     };
+    m_OutputButton.setEnabled(false);
+
+    m_CancelButton.setButtonText("Cancel");
+    addAndMakeVisible(m_CancelButton);
+    m_CancelButton.onClick = [this]()
+    {
+        ClearFiles();
+    };
    
+    m_OkButton.setButtonText("Convert");
+    addAndMakeVisible(m_OkButton);
+    m_OkButton.setEnabled(false);
+    m_OkButton.onClick = [this]()
+    {
+        Block::JsonToOBJ(m_InputPath, m_OutputPath);
+    };
 }
 
 MainComponent::~MainComponent()
@@ -67,6 +83,8 @@ void MainComponent::resized()
 
     m_InputButton.setBounds(x, compHeight - (height + 10), width, height);
     m_OutputButton.setBounds(x, compHeight - 2 * (height + 10), width, height);
+    m_CancelButton.setBounds(x + width / 2, compHeight - 3 * (height + 10), width / 2, height);
+    m_OkButton.setBounds(x, compHeight - 3 * (height + 10), width / 2, height / 2);
 }
 
 void MainComponent::SelectFile(const String& filePattern , std::wstring& pathToSave)
@@ -90,8 +108,31 @@ void MainComponent::SelectFile(const String& filePattern , std::wstring& pathToS
                 if (filePath.isNotEmpty())
                 {
                     pathToSave = filePath.toWideCharPointer();
+                    ++m_NrSelectedFiles;
+
+                    if (m_NrSelectedFiles == 1)
+                    {
+                        //Enable output selector
+                        m_OutputButton.setEnabled(true);
+                    }
+                    else if (m_NrSelectedFiles == 2)
+                    {
+                        //enable output button
+                        m_OkButton.setEnabled(true);
+                    }
                 }
             }
         }
     );
+}
+
+void MainComponent::ClearFiles()
+{
+    m_InputPath.clear();
+    m_OutputPath.clear();
+    m_NrSelectedFiles = 0;
+
+    m_OutputButton.setEnabled(false);
+    m_OkButton.setEnabled(false);
+
 }

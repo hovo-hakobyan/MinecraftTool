@@ -30,4 +30,4 @@ target_link_libraries(MinecraftToolJUCEApp
         juce::juce_recommended_warning_flags
 )
 
-target_include_directories(MinecraftToolJUCEApp PUBLIC "${CommonCodeIncludeDir}")
+target_include_directories(MinecraftToolJUCEApp PUBLIC "${PROJECT_BINARY_DIR}" "${CommonCodeIncludeDir}")

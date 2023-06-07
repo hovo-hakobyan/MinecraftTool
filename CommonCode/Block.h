@@ -25,11 +25,16 @@ struct BlockType
     std::vector<BlockInfo> Blocks;
 };
 
-bool IsFaceHidden(const float3& blockPos, const float3& posToCompare);
 
-namespace BlockUtils
+class Block
 {
-    void JsonToOBJ(const std::wstring& inputPath, const std::wstring& outputPath);
-}
+    public:
+        static void JsonToOBJ(const std::wstring& inputPath, const std::wstring& outputPath);
+    private:
+        static bool IsFaceHidden(const float3& blockPos, const float3& posToCompare);
+    
+};
+
+
 
 
