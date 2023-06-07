@@ -2,8 +2,6 @@
 
 TableModel::TableModel()
 {
-	/*m_Vectors.push_back({ "vector1",3,2,1 });
-	m_Vectors.push_back({ "vector2",7,6,3 });*/
 }
 
 int TableModel::getNumRows()
@@ -51,4 +49,15 @@ void TableModel::paintCell(Graphics& g, int rowNumber, int columnId, int width, 
 			break;
 		}
 	}
+}
+
+void TableModel::Empty()
+{
+	m_Vectors.clear();
+	m_Vectors.resize(0);
+}
+
+void TableModel::AddRow(NamedVector3&& vec)
+{
+	m_Vectors.push_back(vec);
 }

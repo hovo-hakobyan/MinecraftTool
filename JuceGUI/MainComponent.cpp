@@ -1,10 +1,12 @@
 #include "MainComponent.h"
 #include "Block.h"
+#include <fstream>
 
 //==============================================================================
 MainComponent::MainComponent()
 {
     m_NrSelectedFiles = 0;
+    m_FileNumber = 0;
 
     // Make sure you set the size of the component after
     // you add any child components.
@@ -46,8 +48,11 @@ MainComponent::MainComponent()
     m_OkButton.setEnabled(false);
     m_OkButton.onClick = [this]()
     {
-        m_OutputPath.append(L"\\output.obj");
+        std::wstring outputPath = L"\\output" + std::to_wstring(m_FileNumber) + L".obj";
+        m_OutputPath.append(outputPath);
         Block::JsonToOBJ(m_InputPath, m_OutputPath);
+        PrintObj(m_OutputPath);
+        ++m_FileNumber;
     };
 }
 
@@ -140,4 +145,37 @@ void MainComponent::ClearFiles()
     m_OutputButton.setEnabled(false);
     m_OkButton.setEnabled(false);
 
+    m_pTableModel->Empty();
+}
+
+void MainComponent::PrintObj(const std::wstring& path)
+{
+    m_pTableModel->Empty();
+
+    if (std::ifstream is{ path })
+    {
+        std::string line{};
+        NamedVector3 vec{};
+        while (!is.eof())
+        {
+           
+            is >> line;
+            if (line == "v")
+            {
+                is >> vec.x >> vec.y >> vec.z;
+                vec.name = "Vertex";
+                m_pTableModel->AddRow(std::move(vec));
+            }
+            else if (line == "vn")
+            {
+                is >> vec.x >> vec.y >> vec.z;
+                vec.name = "Normal";
+                m_pTableModel->AddRow(std::move(vec));
+            }
+
+        }
+    }
+
+    m_DataTable.updateContent();
+   
 }
