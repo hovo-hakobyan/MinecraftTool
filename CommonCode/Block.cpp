@@ -7,9 +7,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <direct.h>
-#include <Windows.h>
-#include <locale>
+
 
 
 bool Block::IsFaceHidden(const float3& blockPos, const float3& posToCompare)
@@ -212,17 +210,13 @@ void Block::JsonToOBJ(const std::wstring& inputName, const std::wstring& outputN
         }
         else
         {
-            std::wcout << L"Something went wrong, couldn't make output file" << std::endl;
             return;
         }
 
     }
     else
     {
-        std::wcout << L"Input file not found" << std::endl;
         return;
     }
 
-
-    std::wcout << L"Finished successfully" << std::endl;
 }

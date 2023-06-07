@@ -31,3 +31,4 @@ target_link_libraries(MinecraftToolJUCEApp
 )
 
 target_include_directories(MinecraftToolJUCEApp PUBLIC "${PROJECT_BINARY_DIR}" "${CommonCodeIncludeDir}")
+target_link_libraries(MinecraftToolJUCEApp PUBLIC CommonCode)
